@@ -19,6 +19,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     cap_add:
       - NET_ADMIN
+
   radarr:
     image: linuxserver/radarr:latest
     container_name: radarr
@@ -30,9 +31,10 @@ services:
       - PUID=1000
       - TZ=America/Chicago
     volumes:
-      - /mnt/jellydrive/radarr:/ config
+      - /mnt/jellydrive/radarr:/config
       - /mnt/jellydrive/movies:/movies
       - /mnt/jellydrive/downloads/completed:/downloads # maps to /data/completed in Transmission
+
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
@@ -48,6 +50,22 @@ services:
       - /mnt/jellydrive/tv:/tv
       - /mnt/jellydrive/anime:/anime
       - /mnt/jellydrive/downloads/completed:/downloads
+
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: lidarr
+    restart: always
+    ports:
+      - "8686:8686"
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /mnt/jellydrive/lidarr:/config
+      - /mnt/jellydrive/music:/music
+      - /mnt/jellydrive/downloads/completed:/downloads
+
   prowlarr:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -63,6 +81,7 @@ services:
     volumes:
       - /mnt/jellydrive/prowlarr:/config
       - /mnt/jellydrive/downloads/watch:/downloads
+
   heimdall:
     image: linuxserver/heimdall
     container_name: heimdall
