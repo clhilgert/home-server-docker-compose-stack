@@ -13,7 +13,7 @@ services:
       - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
       - WEBPROXY_ENABLED=false
       - LOCAL_NETWORK=192.168.1.0/24
-      - TRANSMISSION_WEB_UI-flood-for-transmission
+      - TRANSMISSION_WEB_UI=flood-for-transmission
     volumes:
       - /mnt/jellydrive/downloads:/data # Transmission expects /data
       - /etc/localtime:/etc/localtime:ro
