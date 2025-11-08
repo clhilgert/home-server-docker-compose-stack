@@ -2,6 +2,10 @@
 
 ## My no-streaming-service streaming service
 
+![Heimdall](./assets/heimdall.png "heimdall dashboard")
+
+![Jellyfin](./assets/jellyfin.png "jellyfin dashboard")
+
 ### Notes
 
 - Install arch/debian
