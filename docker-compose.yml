@@ -90,8 +90,6 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - PGID=1000
-      - PUID=1000
       - TZ=America/Chicago
     volumes:
       - /mnt/jellydrive/heimdall:/config
