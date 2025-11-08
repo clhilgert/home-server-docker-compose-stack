@@ -1,0 +1,76 @@
+services:
+  transmission:
+    image: haugene/transmission-openvpn:latest
+    container_name: transmission
+    restart: always
+    ports:
+      - "9091:9091"
+    environment:
+      - OPENVPN_PROVIDER=PIA
+      - OPENVPN_USERNAME=USERNAME
+      - OPENVPN_PASSWORD=PASSWORD
+      - WEBPROXY_ENABLED=false
+      - LOCAL_NETWORK=192.168.1.0/24
+      - TRANSMISSION_WEB_UI-flood-for-transmission
+    volumes:
+      - /mnt/jellydrive/downloads:/data # Transmission expects /data
+      - /etc/localtime:/etc/localtime:ro
+    cap_add:
+      - NET_ADMIN
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    restart: always
+    ports:
+      - "7878:7878"
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /mnt/jellydrive/radarr:/ config
+      - /mnt/jellydrive/movies:/movies
+      - /mnt/jellydrive/downloads/completed:/downloads # maps to /data/completed in Transmission
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: always
+    ports:
+      - "8989:8989"
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /mnt/jellydrive/sonarr:/config
+      - /mnt/jellydrive/tv:/tv
+      - /mnt/jellydrive/anime:/anime
+      - /mnt/jellydrive/downloads/completed:/downloads
+  prowlarr:
+    image: linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: always
+    ports:
+      - "9696:9696"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /mnt/jellydrive/prowlarr:/config
+      - /mnt/jellydrive/downloads/watch:/downloads
+  heimdall:
+    image: linuxserver/heimdall
+    container_name: heimdall
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /mnt/jellydrive/heimdall:/config
